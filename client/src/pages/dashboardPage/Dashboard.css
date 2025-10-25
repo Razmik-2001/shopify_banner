@@ -1,0 +1,151 @@
+.banner-wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    height: 160px;
+    background-color: #1a1a1a;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    margin: 20px auto;
+    font-family: monospace;
+    transform-origin: center;
+    animation: pulseScale 3s ease-in-out infinite;
+    transition: .3s;
+}
+
+@keyframes pulseScale {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.007);
+    }
+}
+.icon-box{
+    height: 30px;
+    width: 30px;
+    background: white;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: -10px;
+    right: -10px;
+    border-radius: 8px;
+    z-index: 100;
+    box-shadow: 0 0 10px #dddddd;
+    transition: .3s;
+}
+
+.icon-box:hover{
+    transform: scale(1.1);
+}
+
+.icon{
+    color: black;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.banner-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+            -45deg,
+            #2c2c2c,
+            #2c2c2c 5px,
+            #1a1a1a 5px,
+            #1a1a1a 10px
+    );
+    opacity: 0.8;
+    z-index: 1;
+}
+
+.banner-item{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.discount-section{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    height: 100%;
+    background: red;
+    color: white;
+    border-bottom-right-radius: 50%;
+    border-top-right-radius: 50%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.super-sale-text{
+    position: absolute;
+    right:0;
+    top: 0;
+    bottom: 0;
+    width: 160px;
+    height: 100%;
+    background: red;
+    color: white;
+    border-bottom-left-radius: 50%;
+    border-top-left-radius: 50%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.discount-percent {
+    font-size: 45px;
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 8px;
+}
+
+.discount-off {
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: -5px;
+}
+
+.super-text {
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 0.9;
+    margin-bottom: 8px;
+}
+
+.sale-text {
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: -5px;
+}
+
+.banner-text {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.banner-text h1 {
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: 4px;
+    color: white;
+    z-index: 2;
+    font-family: fantasy;
+}
