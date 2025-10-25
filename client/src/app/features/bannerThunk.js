@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = 'https://shopify-banner.onrender.com';
+const API = process.env.REACT_APP_SHOPIFY_APP_URL;
 
 export const addBanner = createAsyncThunk(
     "add/addBanner",
