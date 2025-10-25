@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API = 'https://kinley-subhemispheric-anibal.ngrok-free.dev';
+const API = 'https://shopify-banner.onrender.com';
 
 export const addBanner = createAsyncThunk(
     "add/addBanner",

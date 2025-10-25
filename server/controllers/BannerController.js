@@ -6,40 +6,35 @@ class BannerController {
         const host = req.headers["x-shopify-host"];
 
         if (!host && !shop) {
-            return res.status(403).json({success: false, error: "Missing Shopify headers"})
+            return res.status(403).json({ success: false, error: "Missing Shopify headers" });
         }
 
         try {
-            const banners = await Banner.find({shopDomain: shop});
+            const banners = await Banner.find({ shopDomain: shop });
             const now = new Date();
+            now.setHours(0, 0, 0, 0);
 
             const updatedBanners = await Promise.all(
                 banners.map(async (banner) => {
                     const start = new Date(banner.startDate);
                     const end = new Date(banner.endDate);
 
-                    if (now >= start && now <= end) {
-                        banner.status = "active";
-                    } else {
-                        banner.status = "archive";
-                    }
+                    start.setHours(0, 0, 0, 0);
+                    end.setHours(23, 59, 59, 999);
 
+                    banner.status = (now >= start && now <= end) ? "active" : "archive";
                     await banner.save();
                     return banner;
                 })
             );
-            res.json({
-                updatedBanners,
-                success: true
-            });
+
+            res.json({ success: true, updatedBanners });
         } catch (err) {
             console.error("getBanners error:", err);
-            res.status(500).json({
-                success: false,
-                message: "Error getBanners",
-            });
+            res.status(500).json({ success: false, message: "Error getBanners" });
         }
     }
+
 
     static async createBanner(req, res) {
         try {

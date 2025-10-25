@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require("cors");
 require('dotenv').config();
 
 const connectDB = require('./config/connectDB');
@@ -13,8 +14,18 @@ const {
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRouter);
+
+app.use((req, res, next) => {
+    const shop = req.query.shop || '';
+    res.setHeader(
+        "Content-Security-Policy",
+        `frame-ancestors https://${shop} https://admin.shopify.com https://*.myshopify.com;`
+    );
+    next();
+});
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
