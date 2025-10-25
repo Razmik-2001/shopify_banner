@@ -18,21 +18,33 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use('/', indexRouter);
 
+// CSP և X-Frame-Options ուղղված middleware
 app.use((req, res, next) => {
-    const shop = req.query.shop || '';
+    // Հանում ենք հնացած X-Frame-Options հեդերը
+    res.removeHeader("X-Frame-Options");
+
+    const shop = req.query.shop;
+    let frameAncestors = "https://admin.shopify.com https://*.myshopify.com";
+
+    // Եթե shop կա, ավելացնում ենք CSP-ում
+    if (shop) {
+        frameAncestors = `https://${shop} ${frameAncestors}`;
+    }
+
     res.setHeader(
         "Content-Security-Policy",
-        `frame-ancestors https://${shop} https://admin.shopify.com https://*.myshopify.com;`
+        `frame-ancestors ${frameAncestors};`
     );
+
     next();
 });
 
+// Express static + fallback - առանց փոփոխության
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.all(/.*/, (req, res) => {
     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
 });
-
 
 connectDB();
 
