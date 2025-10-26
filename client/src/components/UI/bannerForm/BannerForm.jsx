@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {useDispatch} from "react-redux";
 
-import {addBanner} from "../../../app/features/bannerThunk";
+import {addBanner, getBanner} from "../../../app/features/bannerThunk";
 import "./BannerForm.css";
 
 function BannerForm() {
@@ -18,10 +18,23 @@ function BannerForm() {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
+    const handleSubmit = (ev) => {
+        ev.preventDefault();
+        dispatch(addBanner(formData))
+            .unwrap()
+            .then(() => {
+                dispatch(getBanner());
+
+            })
+            .catch((error) => {
+                console.error('Failed to add banner and refresh list:', error);
+            });
+    }
+
     return (
         <div className="banner-container">
             <h2 className="banner-title">Create Banner</h2>
-            <form className="banner-form" onSubmit={() => dispatch(addBanner(formData))}>
+            <form className="banner-form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Banner Text</label>
                     <input
